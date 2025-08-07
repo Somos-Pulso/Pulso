@@ -1,0 +1,80 @@
+{% load static %}
+<div id="modal-detalhe"
+     class="modal-detalhe hidden"
+     style="
+        z-index: 2000;
+        width: 20vw;
+        min-width: 250px;
+        max-width: 20vw;
+        height: auto;
+        background-color: white;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: opacity 0.2s ease;
+     ">
+
+
+    <div class="d-flex flex-column gap-2" style="background-color:rgb(255, 255, 255); width: 100%;">
+        <!-- Ações -->
+        <div class="modal-detail-actions d-flex justify-content-end gap-3">
+            {% if not is_doctor %}
+                <button id="shift-delete-button"
+                        class="icon-btn icon-delete"
+                        title="Excluir" 
+                        onclick="deletarPlantao()"></button>
+                        
+                <button id="shift-edit-button"
+                        class="icon-btn icon-edit"
+                        title="Editar" 
+                        onclick="editarPlantao()"></button>
+            {% endif %}
+            <button class="icon-btn icon-detail" title="Mais Detalhes"></button>
+            <button class="icon-btn icon-exit" title="Fechar Detalhe" onclick="fechardetalhe()"></button>
+
+        </div>
+
+        <!-- Conteúdo do detalhe -->
+        <div class="modal-detail-content ps-2">
+            <div class="d-flex align-items-center gap-1 pb-1">
+                <img src="{% static "hospital/img/detalhe/user.svg" %}" alt="criado por" width="17" height="17" class="me-1">
+                <strong class="header-text">Criado por:</strong><span class="header-text" id="detalhe-gestora"> {{manager_name}}</span>
+            </div>
+            <div class="d-flex align-items-center gap-1 pb-1">
+                <img src="{% static "hospital/img/detalhe/date.svg" %}" alt="data" width="17" height="17" class="me-1">
+                <span class="header-text" id="detalhe-data">--/--/--</span>
+            </div>
+            <div class="d-flex align-items-center gap-1 pb-1">
+                <img src="{% static "hospital/img/detalhe/time.svg" %}" alt="horario" width="17" height="17" class="me-1">
+                <span class="header-text">
+                    <span id="detalhe-start">--:--</span> - 
+                    <span id="detalhe-end">--:--</span>
+                </span>
+            </div>
+            <div class="pt-2">
+                <p style="color: var(--blue-100); margin-left: 17px; max-width: 95%;" id="detalhe-description">Sem descrição.</p>
+            </div>
+            <div class="pt-2 ms-2">
+                <ul class="doctors list-unstyled" id="detalhe-medicos">
+                    <!-- Médicos serão inseridos via JS -->
+                    <li class="text-muted">Nenhum médico alocado.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+/*document.addEventListener("click", (e) => {
+  const modal = document.getElementById("modal-detalhe");
+
+  if (!modal || modal.classList.contains("hidden")) return;
+
+  // Se clicou fora do modal
+  if (!modal.contains(e.target)) {
+    fechardetalhe();
+  }
+});*/
+document.querySelector(".icon-detail").addEventListener("click", function () {
+  window.location.href = this.dataset.url;
+});
+</script>
+

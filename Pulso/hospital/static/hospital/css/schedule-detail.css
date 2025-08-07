@@ -1,0 +1,207 @@
+@import url(../../../../pulso/static/css/paleta.css);
+
+.escala-card
+{
+    padding: 1em;
+    border-radius: 12px;
+}
+.semibold {
+  font-weight: 550;
+}
+/* Componente base genérico para todos os botões de ação */
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Texto ajustado verticalmente */
+.action-button .text {
+  display: inline-block;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+/* Animação do "pulinho" */
+@keyframes buttonBounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.98); }
+  60%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.action-button:hover {
+  animation: buttonBounce 0.4s ease;
+}
+
+.action-button.excluir-schedule {
+  border: 1px solid var(--red-100);
+  color: var(--red-100);
+}
+.action-button.excluir-schedule:hover,
+.action-button.excluir-schedule:active {
+  background-color: var(--red-100);
+  color: white;
+}
+
+.action-button.publicar {
+  border: 1px solid var(--green-500);
+  color: var(--green-500);
+}
+.action-button.publicar:hover,
+.action-button.publicar:active {
+  background-color: var(--green-500);
+  color: white;
+}
+
+.action-button.editar {
+  border: 1px solid var(--blue-500);
+  color: var(--blue-500);
+}
+.action-button.editar:hover,
+.action-button.editar:active {
+  background-color: var(--blue-500);
+  color: white;
+}
+
+.action-button .icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  transition: background-color 0.3s ease;
+}
+
+.icon-excluir
+{
+  mask-image: url('../img/detalhe/delete.svg');
+  -webkit-mask-image: url('../img/detalhe/delete.svg');
+}
+
+.icon-publicar {
+  mask-image: url('../img/CriarPlantao/publicar.svg');
+  -webkit-mask-image: url('../img/CriarPlantao/publicar.svg');
+}
+
+.icon-editar {
+  mask-image: url('../img/CriarPlantao/editar.svg');
+  -webkit-mask-image: url('../img/CriarPlantao/editar.svg');
+}
+
+.warn-text {
+  color: var(--orange-100);
+}
+.public-text {
+  color: var(--green-100);
+}
+.critical-text {
+  color: var(--red-100);
+}
+
+.escala-status-warn
+{
+  padding: 1px 3px;
+  border-radius: 10px;
+  color: white;
+  background-color: var(--orange-100);
+  margin-left: 4px;
+}
+.status-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  background-color: currentColor;
+}
+
+/* Ícones por status */
+.status-icon.publicado {
+  mask-image: url('../img/status/published.svg');
+  -webkit-mask-image: url('../img/status/published.svg');
+  color: var(--green-500);
+}
+
+.status-icon.rascunho {
+  mask-image: url('../img/status/draft.svg');
+  -webkit-mask-image: url('../img/status/draft.svg');
+  color: var(--orange-100);
+}
+
+.status-icon.arquivado {
+  mask-image: url('../img/status/archived.svg');
+  -webkit-mask-image: url('../img/status/archived.svg');
+  color: var(--gray-300);
+}
+
+.status-icon.vazios {
+  mask-image: url('../img/status/warning.svg'); 
+  -webkit-mask-image: url('../img/status/warning.svg');
+  color: var(--orange-500);
+}
+
+.status-icon.completo {
+  mask-image: url('../img/main/check.svg');
+  -webkit-mask-image: url('../img/status/check.svg');
+  color: var(--green-500);
+}
+#modal-form {
+  scrollbar-width: thin;           /* Firefox */
+  scrollbar-color: #999 #f0f0f0;   /* cor do thumb e do track */
+}
+
+/* Chrome, Edge, Safari */
+#modal-form::-webkit-scrollbar {
+  width: 6px;
+}
+#modal-form::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 3px;
+}
+#modal-form::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+@keyframes left-animation {
+  0%, 50%, 100% {
+    transform: translateX(0);
+  }
+  25%, 75% {
+    transform: translateX(-3px);
+  }
+}
+@keyframes right-animation {
+  0%, 50%, 100% {
+    transform: translateX(0);
+  }
+  25%, 75% {
+    transform: translateX(3px);
+  }
+}
+.left-poke:hover {
+  animation: left-animation 1s ease-in-out forwards;
+}
+
+.right-poke:hover {
+  animation: right-animation 1s ease-in-out forwards;
+}

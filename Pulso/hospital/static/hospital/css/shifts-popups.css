@@ -1,0 +1,589 @@
+/* ========= MODAIS ========= */
+
+#modal-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal-edicao {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+.modal-edicao.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Modal flutuante de detalhe */
+.modal-detalhe {
+  position: absolute;
+  z-index: 2000;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 7px rgba(0,0,0,0.1);
+  max-width: 400px;
+  display: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-detalhe.visible {
+  display: block;
+}
+
+.modal-detalhe.hidden {
+  display: none;
+}
+
+.modal-detail-actions {
+  width: 100%;
+  align-items: end;
+  gap: 7px;
+  background-color: white;
+  padding: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 3px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+  background-color: aliceblue;
+  width: 50em;
+  transition: transform 0.3s ease;
+  transform: scale(1);
+  padding-top: 3.5rem !important;
+}
+
+.hidden .modal-content {
+  transform: scale(0.95);
+}
+
+.hidden {
+  display: none;
+}
+
+/* ========= CAMPOS ========= */
+
+.srcbar,
+.field-desc,
+.field-hours {
+  border-radius: 7px;
+  padding: 5px;
+  width: 100%;
+}
+
+.srcbar {
+  padding-left: 30px;
+  border: 1px solid var(--blue-500);
+}
+
+.srcbar:focus,
+.field-desc:focus,
+.field-hours:focus {
+  outline: none;
+  border: 1px solid var(--blue-500);
+  box-shadow: 0 0 2px var(--blue-500);
+}
+
+.field-desc {
+  border: none;
+  box-shadow: 0 0 2px var(--blue-500);
+  color: var(--blue-100);
+}
+
+.field-hours {
+  border: none;
+  box-shadow: 0 0 2px var(--blue-500);
+  color: gray;
+  margin-left: 17px;
+  width: 7em;
+  text-align: center;
+  transition: padding 0.2s ease;
+}
+
+/* ========= BLOCOS ========= */
+
+.card-plantao {
+  overflow: visible;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  flex: 1 1 auto;
+}
+
+.title-plantao, .title-alocados{
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blue-100);
+  /* border-bottom: 1px solid var(--blue-500); */
+  padding: 5px 0;
+  /* margin-bottom: 5px; */
+  width: 70%;
+}
+.title-alocados
+{
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-weight: bold;
+}
+
+.hours-label,
+.header-text {
+  font-weight: 500;
+  color: var(--blue-100);
+  font-size: 1.2rem; 
+  margin: 0;
+}
+
+
+.medicos-alocados ul {
+  display: flex;
+  gap: 5px;
+  padding: 5px 2px;
+  margin: 0;
+  overflow-x: auto; /* scroll horizontal se precisar */
+}
+
+.medico-alocado {
+  list-style: none;
+}
+
+.medico-foto-alocado {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--blue-100);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.medico-foto-alocado:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+
+
+/* ========= MÉDICOS ========= */
+
+.medico-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px solid #d3e2ff;
+  border-radius: 1rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.medico-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.medico-foto {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.medico-texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.medico-nome {
+  font-weight: 700;
+  color: #1d4ed8;
+  margin: 0;
+}
+
+.medico-especialidade {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0;
+}
+
+.medico-checkbox {
+  width: 24px;
+  height: 24px;
+  appearance: none;
+  border: 2px solid #999;
+  border-radius: 0.5rem;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s;
+}
+
+.medico-checkbox:checked {
+  background-color: var(--green-500);
+  border-color: var(--green-500);
+}
+
+.medico-checkbox:checked::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('../img/CriarPlantao/check-white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ========= BUSCA ========= */
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.input-wrapper input {
+  padding-left: 30px;
+  width: 100%;
+  height: 32px;
+  font-size: 14px;
+}
+
+.icon-lupa {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.icon-lupa:focus {
+  transform: translateY(-50%) rotate(360deg);
+}
+
+/* ========= BOTÕES ========= */
+
+.button-salvar,
+.button-excluir,
+.button-editar,
+.button-sair,
+.filter-button,
+.order-button {
+  border: 1px solid var(--blue-500);
+  padding: 7px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 5px;
+  background-color: transparent;
+}
+
+.button-salvar {
+  color: var(--green-500);
+  border-color: var(--green-500);
+  --mask-image: url('../img/status/check.svg');
+}
+
+.button-salvar:hover {
+  background-color: var(--green-500);
+  color: white;
+  transform: scale(1.05);
+}
+.button-excluir
+{
+  --mask-image: url('../img/detalhe/delete.svg');
+  color: var(--red-100);
+  border-color: var(--red-100);
+}
+
+.button-excluir:hover {
+  background-color: var(--red-100);
+  color: white;
+  transform: scale(1.05);
+}
+.button-excluir, .button-salvar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;       /* Alinha verticalmente */
+  justify-content: center;   /* Centraliza o texto + ícone horizontalmente */
+  gap: 0.5rem;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.button-excluir::before, .button-salvar::before {
+  content: "";
+  display: inline-block;
+  align-self: center;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  mask-image: var(--mask-image);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: var(--mask-image);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  transition: background-color 0.2s ease;
+  margin-top: 1px;
+}
+.button-excluir::before {
+  transform: translateY(-2px);
+}
+.button-editar,
+.button-sair {
+  color: var(--blue-500);
+  border-color: var(--blue-500);
+}
+
+.button-editar:hover,
+.button-sair:hover {
+  background-color: var(--blue-500);
+  color: white;
+  transform: scale(1.05);
+}
+
+.filter-button,
+.order-button {
+  width: 100%;
+  color: var(--blue-500);
+}
+
+.icon-btn {
+  position: relative;
+  appearance: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  will-change: transform;
+  color: var(--gray-100);
+}
+
+.icon-btn::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: var(--mask-image);
+  -webkit-mask-image: var(--mask-image);
+  transition: background-color 0.2s ease;
+}
+.icon-exit::before {
+  width: 15px;
+  height: 15px;
+}
+
+.icon-edit {
+  --mask-image: url('../img/detalhe/edit.svg');
+}
+
+.icon-detail {
+  --mask-image: url('../img/detalhe/info.svg');
+  
+}
+
+.icon-delete {
+  --mask-image: url('../img/detalhe/delete.svg');
+}
+
+
+.icon-exit {
+  --mask-image: url('../img/detalhe/X.svg');
+}
+
+@keyframes jump-hover {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(-2px);
+  }
+}
+.icon-btn:hover {
+  animation: jump-hover 0.4s ease forwards;
+  background-color: #cccccc56; 
+  border-radius: 50%;       
+}
+
+.icon-delete:hover {
+  color: var(--red-100);
+}
+.icon-edit:hover {
+  color: var(--blue-500);
+}
+.icon-detail:hover {
+  color: var(--orange-100);
+}
+.icon-btn.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.icon-btn.disabled:hover{
+  animation:none;
+}
+
+
+#detalhe-description {
+  color: var(--blue-100);
+  margin-left: 17px;
+  max-width: 95%;
+  display: -webkit-box;
+  line-clamp: 3; 
+  -webkit-line-clamp: 3;         
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+}
+.hours-icon{
+  width: 15px;
+  height: auto;
+}
+.modal-icon-top-right {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 15px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.6ms ease-in-out;
+}
+.modal-icon-top-right:hover
+{
+  transform: scale(1.1);
+}
+.is-invalid {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+#calendar {
+  max-width: 100vw;
+  overflow-x: auto; 
+}
+.clocklet {
+  transform: scale(0.6); /* reduz o tamanho geral */
+  width: auto !important;
+  height: auto !important;
+  border-radius: 8px;
+  padding: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.clocklet .clock-face {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+/* Opcional: esconde ponteiros decorativos */
+.clocklet .hand, .clocklet .center-dot {
+  display: none;
+}
+
+
+.dropdown-custom {
+  position: relative;
+}
+
+/* Botão toggle */
+.dropdown-toggle {
+  padding: 6px 16px;
+  border: 1px solid var(--blue-500);
+  background-color: transparent;
+  color: var(--blue-500);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+}
+
+
+/* Menu */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  display: none;
+  z-index: 10;
+}
+
+/* Mostrar o menu */
+.dropdown-menu.open {
+  display: block;
+}
+
+.dropdown-menu li {
+  list-style: none;
+  margin-bottom: 8px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+.caret-icon {
+  margin-left: 0.5em;
+  transition: transform 0.2s ease;
+  transform: rotate(0deg); /* seta pra cima */
+}
+
+.dropdown-custom.open .caret-icon {
+  transform: rotate(180deg); /* seta pra baixo */
+}
+.dropdown-toggle::after {
+  display: none !important; /* desativa o caret que o Bootstrap injeta */
+}

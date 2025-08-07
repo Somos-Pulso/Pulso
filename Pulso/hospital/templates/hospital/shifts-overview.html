@@ -1,0 +1,50 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+{% block plantao_menu_active %}is-active{% endblock %}
+{% block plantao_menu_expanded %}true{% endblock %}
+{% block plantao_menu_icon_rotation %}rotate{% endblock %}
+{% block plantao_menu_show %}show{% endblock %}
+{% block plantao_meus_active %}is-active{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1 class="mb-2 fs-2 text-primary fw-bold">Meus plantões</h1>
+    <p class="paragrafo-secao opacity-50 mb-3 fs-6">“Organize seus plantões sem complicação, a qualquer hora
+        e em qualquer lugar.”</p>
+</div>
+
+<div class="filtros-container d-flex gap-3 flex-no-wrap align-items-end mt-4 mb-4">
+    <div class="filtros d-flex flex-wrap gap-3">
+        <div class="filtro d-flex flex-column">
+            <div class="d-flex align-items-center pb-2 gap-2">
+                <i class="bi bi-diagram-3-fill" style="font-size: 20px;"></i>
+                <label for="departamento" class="form-label m-0">Setor</label>
+            </div>
+            <select name="departamento" class="form-select">
+                <option value="everything" {% if not selected_dept or selected_dept == 'everything' %}selected{% endif %}>
+                    Todos
+                </option>
+                {% for department in departments %}
+                <option value="{{ department.id }}" 
+                        {% if selected_dept == department.id|stringformat:"i" %}selected{% endif %}>
+                    {{ department.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+    <!-- <form method="get" class="d-flex gap-3 flex-no-wrap align-items-end"> -->
+        
+        <!-- <button type="submit" class="btn btn-primary">Filtrar</button> -->
+
+<div id="container-plantoes">
+    {% include 'hospital/shifts-list.html' %}
+</div>
+
+<script src="{% static '/hospital/js/shifts-filter.js' %}"></script>  <!-- Deve vir DEPOIS do Bootstrap -->
+
+{% endblock %}

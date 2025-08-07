@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url(paleta.css);
+
+* {
+    font-family: "Poppins", sans-serif;
+    font-size: 15.1px;
+}
+
+html {
+    margin: 0;
+}
+
+.bg-primary {
+    background-color: var(--blue-100) !important;
+}
+
+.text-primary {
+    font-family: 'Poppins';
+    color: var(--blue-100) !important;
+}
+
+.text-red {
+    color: var(--red-100) !important;
+    font-family: 'Poppins';
+}
+
+.bg-secondary {
+    background-color: var(--background-gray) !important;
+}
+
+.btn-outline-success {
+    font-weight: bolder;
+    color: var(--green-500);
+    border-color: var(--green-500);
+}
+
+.btn-outline-success:hover {
+    color: var(--background-gray);
+    border-color: var(--background-gray);
+    background-color: var(--green-500);
+}
+
+.sidebar {
+    height: calc(100vh - 48px);
+    min-width: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.link-menor {
+    gap: 12px;
+}
+
+.corpo {
+    overflow: hidden;
+}
+
+.link-menor:hover {
+    background-color: var(--blue-500);
+}
+
+.is-active {
+    background-color: var(--blue-500);
+    border-radius: 0.5rem;
+}
+
+.header-notation {
+    text-decoration: none;
+}
+
+.header-notation:hover {
+    text-decoration: underline;
+}
+
+.icone-header {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.foto-perfil-header {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--blue-100);
+    object-fit: cover;
+}
+
+.content {
+    height: calc(100vh - 129px);
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.paragrafo-secao {
+    color: var(--gray-300);
+}
+
+.filtro {
+    min-width: 200px;
+}
+
+.filtro-select {
+    color: var(--gray-300);
+}
+
+.bloco-escala {
+    background-color: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 1rem;
+}
+
+.bi-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.bi-chevron-down.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+.conteudo2 {
+    text-decoration: none;
+    color: inherit;
+}
+
+.conteudo2:hover {
+    cursor: pointer;
+}
+
+h3:hover {
+    text-decoration: underline;
+    margin-bottom: 0;
+}
+
+@keyframes buttonBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(0.98);
+    }
+
+    60% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.float {
+    position: fixed;
+    top: 40px;
+    left: 335px;
+    z-index: 1000;
+}
+
+.btn-voltar {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    border: 2px solid var(--blue-100);
+    color: var(--blue-100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background-color: var(--blue-100);
+    color: white;
+}
+
+.svg-voltar {
+    display: block;
+}

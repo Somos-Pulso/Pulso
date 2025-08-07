@@ -1,0 +1,215 @@
+<!-- Modal de Erro - Template Django -->
+{% load static %}
+<div class="modal-overlay" id="confirmModal" style="display: none;">
+    <div class="modal-container">
+        <button class="modal-close" id="confirmClose" aria-label="Fechar modal">×</button>
+
+        <h2 class="modal-title-confirm">Deseja
+            <span class="modal-title highlight">excluir</span> mesmo?
+        </h2>
+
+        <p id="confirmText" class="modal-subtitle">
+            Tem certeza que deseja excluir essa entidade?
+        </p>
+
+        <div class="error-icon">
+            <img src="{% static 'img/modals/delete.svg' %}" alt="" width="100" height="100">
+        </div>
+
+        <div class="modal-actions d-flex gap-2 justify-content-center pt-3">
+            <button id="confirmNo" class="cancel-button">Cancelar</button>
+            <button id="confirmYes" class="btn-excluir-escala">Excluir</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Overlay */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Modal Container */
+    .modal-container {
+        background: white;
+        border-radius: 16px;
+        padding: 40px 32px;
+        max-width: 400px;
+        width: 90%;
+        position: relative;
+        text-align: center;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-container {
+        transform: scale(1);
+    }
+
+    /* Close Button */
+    .modal-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 4px;
+        transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+        color: #6b7280;
+    }
+
+    /* Title */
+    .modal-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .modal-title-confirm .highlight {
+        color: #D2281E;
+    }
+
+    /* Subtitle */
+    .modal-subtitle {
+        font-size: 16px;
+        color: #6b7280;
+        margin-bottom: 32px;
+        line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .modal-container {
+            padding: 32px 24px;
+            margin: 16px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+        }
+
+        .checkmark::before {
+            font-size: 24px;
+        }
+    }
+
+    .cancel-button {
+        border: 2px solid #8d8d8d;
+        color: #8d8d8d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: 600;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    @keyframes buttonBounce {
+        0% {
+            transform: scale(1);
+        }
+
+        30% {
+            transform: scale(0.98);
+        }
+
+        60% {
+            transform: scale(1.02);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .cancel-button:hover {
+        animation: buttonBounce 0.4s ease;
+        background-color: #8d8d8d;
+        color: white;
+    }
+
+    .btn-excluir-escala {
+        border: 2px solid #D2281E;
+        color: #D2281E;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: 600;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .btn-excluir-escala:hover {
+        animation: buttonBounce 0.4s ease;
+        background-color: #D2281E;
+        color: white;
+    }
+</style>
+
+<script>
+    // Mesmo JavaScript da versão anterior
+    function closeModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    document.getElementById('successModal').addEventListener('click', function (e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>

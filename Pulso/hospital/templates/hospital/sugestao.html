@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../static/user/img/icon/logo.svg" type="image/svg">
+    <title>Pulso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/user/css/style.css">
+
+    <style>
+        hr { 
+            margin-top: 0; 
+            color: #143886;
+        }
+    </style>
+</head>
+
+<body class="d-flex">
+    <nav class="sidebar bg-primary p-3 m-4 me-0 rounded-4 d-flex flex-column align-items-center">
+        <img src="../../static/user/img/sidebar/logotipo_pulso.svg" alt="Logotipo do Pulso" class="my-4" />
+        <ul class="nav flex-column gap-1 w-100">
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="index.html">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_Inicial.svg" alt="" width="19" height="19">
+                        <span class="ms-2">Página Inicial</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center justify-content-between rounded-4"
+                    data-bs-toggle="collapse" href="#submenu-plantoes" role="button" aria-expanded="false"
+                    aria-controls="submenu-plantoes">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_Plantoes.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Plantões</span>
+                    </span>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <div class="collapse ps-4" id="submenu-plantoes">
+                    <ul class="px-1 nav flex-column">
+                        <li class="nav-item">
+                            <a class="m-1 mb-0 nav-link text-white link-menor link-menor-menor d-flex align-items-center rounded-4 w-100"
+                                href="meusPlantoes.html">
+                                <span class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-person-heart" style="font-size: 19px;"></i>
+                                    <span class="ms-2">Meus Plantões</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center justify-content-between rounded-4"
+                    data-bs-toggle="collapse" href="#submenu-escalas" role="button" aria-expanded="false"
+                    aria-controls="submenu-escalas">
+                    <span class="d-flex align-items-center gap-2">
+                        <i class="bi bi-table" style="font-size: 20px; color: var(--background-gray);"></i>
+                        <span class="ms-2">Escalas</span>
+                    </span>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <div class="collapse ps-4" id="submenu-escalas">
+                    <ul class="px-1 nav flex-column">
+                        <li class="nav-item">
+                            <a class="m-1 mb-0 nav-link text-white link-menor d-flex align-items-center rounded-4 w-100"
+                                href="minhas-escalas-medico.html">
+                                <span class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-calendar-check-fill" style="font-size: 19px;"></i>
+                                    <span class="ms-2">Minhas Escalas</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_Calendario.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Calendário</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center is-active rounded-4" href="notificacoes.html">
+                    <span class="d-flex align-items-center gap-2">
+                        <i class="bi bi-bell-fill"></i>
+                        <span class="ms-2">Notificações</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_pagina_Solitacoes.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Solicitações</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_ControlePontos.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Controle de Pontos</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_VideConferencia.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Videoconferência</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_Relatorios.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Relatórios</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_MeuDiario.svg" alt="" width="19"
+                            height="19">
+                        <span class="ms-2">Meu Diário</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center justify-content-between rounded-4"
+                    data-bs-toggle="collapse" href="#submenu-config" role="button" aria-expanded="false"
+                    aria-controls="submenu-config">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/config-icon-fill.svg" alt="" width="19" height="19">
+                        <span class="ms-2">Configurações</span>
+                    </span>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <div class="collapse ps-4" id="submenu-config">
+                    <ul class="px-1 nav flex-column">
+                        <li class="nav-item">
+                            <a class="m-1 mb-0 nav-link text-white link-menor d-flex align-items-center rounded-4 w-100"
+                                href="#">
+                                <span class="d-flex align-items-center gap-2">
+                                    <img src="../../static/user/img/sidebar/perfil-icon-fill.svg" alt="" width="19"
+                                        height="19">
+                                    <span class="ms-2">Perfil</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="m-1 mb-0 nav-link text-white link-menor d-flex align-items-center rounded-4 w-100"
+                                href="#">
+                                <span class="d-flex align-items-center gap-2">
+                                    <img src="../../static/user/img/sidebar/aparencia-icon-fill.svg" alt="" width="19"
+                                        height="19">
+                                    <span class="ms-2">Aparência</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="m-1 mb-0 nav-link text-white link-menor d-flex align-items-center rounded-4 w-100"
+                                href="#">
+                                <span class="d-flex align-items-center gap-2">
+                                    <img src="../../static/user/img/sidebar/idioma-icon-fill.svg" alt="" width="19"
+                                        height="19">
+                                    <span class="ms-2">Idioma</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white link-menor d-flex align-items-center rounded-4" href="#">
+                    <span class="d-flex align-items-center gap-2">
+                        <img src="../../static/user/img/sidebar/icone_Pagina_Sair.svg" alt="" width="19" height="19">
+                        <span class="ms-2">Sair</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="corpo m-4 w-100 h-100 px-4 d-flex flex-column flex-wrap">
+
+        <header class="navbar py-4 mx-4 border-bottom">
+            <div class="container-fluid justify-content-end p-0">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="notificacoes.html" class="text-decoration-none">
+                        <img src="../../static/user/img/header/icone_notificacao.svg" alt="Notificações"
+                            class="icone-header" />
+                        <span class="text-primary header-notation">Notificações</span>
+                    </a>
+                    <a href="#" class="text-decoration-none">
+                        <img src="../../static/user/img/header/foto-perfil.png" alt="Foto de perfil"
+                            class="foto-perfil-header" />
+                        <span class="text-primary header-notation">Dra. Ana Paula</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="content py-4 px-4">
+            <div>
+                <h1 class="mb-2 fs-2 text-primary fw-bold">Sugestão</h1>
+                <p class="paragrafo-secao opacity-50 mb-3 fs-6">“Organize seus plantões sem complicação, a qualquer hora
+                    e em qualquer lugar.”</p>
+            </div>
+
+
+            <div class ="row d-flex flex-row flex-nowrap justify-content-between col-12">
+                <div class ="detalhe me-4 col-9 d-flex flex-column p-5 rounded-4 shadow border">
+                    <div class="mb-2">
+                        <h3 class="mb-1 text-primary fw-bold" style="font-size: 1.5em;">#120 Sugestão de plantão extra</h3>
+                        <!-- <small class="text-muted">Período: 01 - 15 de Junho</small> -->
+                    </div>
+                    <hr>
+                    <div class="data row-sm-2 mb-4">
+                            <span> O Gestor Paulo Afinso sugeriu um novo plantão para você. Este plantão não faz parte da sua escala obrigatória, você pode avalia-lo e decidir se é possível assumi-lo. Os setores responsáveis aguardam sua resposta a esta solicitação</span>
+                    </div>
+                    <div class="data row-sm-2 mb-2">
+                            <span class="me-2"><img src="../../static/user/img/main/calendario.svg" alt="" width="20"
+                                height="20">
+                            </span>
+                            <span> <strong>Data:</strong> Quinta-feira, 15 de Junho de 2025</span>
+                    </div>
+                    <div class="data row-sm-2 mb-2">
+                            <span class="me-2"><img src="../../static/user/img/main/horario.svg" alt="" width="20"
+                                height="20">
+                            </span>
+                            <span> <strong>Horário:</strong> 16:30 - 20:30</span>
+                    </div>
+                    <div class="data row-sm-2 mb-2">
+                            <span class="me-2"><i class="bi bi-diagram-3-fill" style="font-size: 20px; color: var(--blue-100);"></i>
+                            </span>
+                            <span> <strong>Setor:</strong> Urgencia - SETURG</span>
+                    </div>
+                    <div class="data row-sm-2 mb-2">
+                            <span class="me-2"><i class="bi bi-person-fill" style="font-size: 20px; color: var(--blue-100);"></i>
+                            </span>
+                            <span> <strong>Gestor Responsável:</strong> Paulo Afonso</span>
+                    </div>
+                    <div>
+                        <div class="row-12 detalhe d-flex flex-column p-4 mt-4 rounded-4 shadow border">
+                            <div class="mb-1">
+                                <span class="me-2"><img src="../../static/user/img/main/calendario.svg" alt="" width="20"
+                                    height="20">
+                                </span>
+                                <span> <strong>Sua carga horária</strong></span>
+                            </div>
+                            <span><small>Meta semanal: 20h</small></span>
+                            <div class="progress mt-2">
+                                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="col-12 d-flex mt-2 flex-row justify-content-between ">
+                                <div class="col-4 text-center text-success">
+                                    <p class="mb-0">
+                                        <i class="bi bi-check-circle-fill"></i> <strong>Concluídos</strong>
+                                    </p>
+                                    <p>100% - 20h</p>
+                                </div>
+                                <div class="col-4  text-center text-warning">
+                                    <p class="mb-0">
+                                        <i class="bi bi-clock"></i> <strong>Pendente</strong>
+                                    </p>
+                                    <p>0% - 0h</p>
+                                </div>
+                                <div class="col-4 text-center text-danger">
+                                    <p class="mb-0">
+                                        <i class="bi bi-clock"></i><strong> Extra</strong>
+                                    </p>
+                                    <p>20% - 4h</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn border-3 rounded-4 btn-outline-success ms-4 mt-4" type="submit">Aceitar</button>
+                        <button class="btn border-3 rounded-4 btn-outline-danger ms-4 mt-4" type="submit">Recusar</button>
+                    </div>
+                </div>
+                <div class ="detalhe col-3 d-flex flex-column p-5 rounded-4 shadow border">
+                     <div class="mb-2">
+                        <h3 class="mb-1 text-primary fw-bold" style="font-size: 1.5em;">Justificativa</h3>
+                        <!-- <small class="text-muted">Período: 01 - 15 de Junho</small> -->
+                    </div>
+                    <hr>
+                    <div class="d-flex align-items-center pb-2 gap-2">
+                        <p> <i class="bi bi-person-fill" style="font-size: 20px; color: var(--blue-100);"></i> Gestora Geovana Silva</p>
+                    </div>
+                    <div class="border border-light rounded-4 p-2 d-flex align-items-center pb-2 gap-2">
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis maiores tempore libero at exercitationem? Ratione
+                            dolor soluta porro blanditiis placeat aspernatur fugit repellat iste temporibus perferendis! Eius doloribus at
+                            libero!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis maiores tempore libero at exercitationem? Ratione
+                            dolor soluta porro blanditiis placeat aspernatur fugit repellat iste!</p>
+
+                    </div>
+                    <label class="form-label text-muted for="comentario"> Responder </label>
+                    <textarea class="form-control" id="comentario" rows="1"></textarea>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                // 1. Remover 'is-active' de todos os links
+                document.querySelectorAll('.nav-link.is-active').forEach(activeLink => {
+                    activeLink.classList.remove('is-active');
+                });
+
+                // 2. Adicionar 'is-active' ao que foi clicado
+                this.classList.add('is-active');
+            });
+        });
+
+        // 3. Gerenciar rotação dos ícones baseados no evento de colapso do Bootstrap
+        document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(toggle => {
+            const chevronIcon = toggle.querySelector('i.bi-chevron-down');
+            const targetSelector = toggle.getAttribute('href');
+            const target = document.querySelector(targetSelector);
+
+            if (target && chevronIcon) {
+                target.addEventListener('show.bs.collapse', () => {
+                    chevronIcon.classList.add('rotate');
+                });
+
+                target.addEventListener('hide.bs.collapse', () => {
+                    chevronIcon.classList.remove('rotate');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

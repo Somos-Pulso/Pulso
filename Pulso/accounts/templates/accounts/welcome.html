@@ -1,0 +1,471 @@
+{% extends "bases/base.html" %}
+{% load static %}
+
+{% block pagina_inicial_menu_active %}is-active{% endblock %}
+
+{% block content %}
+
+<style>
+    .bg-concluido {
+        background-color: #21C694 !important;
+    }
+
+    .text-concluido {
+        color: #21C694 !important;
+    }
+
+    .clickable-card {
+        transform: scale(1.00);
+        border: 1px solid #373737;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+    .clickable-card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'accounts/css/welcome.css'%}">
+
+<div>
+    <h1 class="mb-2 fs-2 text-primary fw-bold">Página inicial</h1>
+    <p class="paragrafo-secao opacity-50 mb-3 fs-6 text-custom">
+        “Organize seus plantões sem complicação, a qualquer hora e em qualquer lugar.”
+    </p>
+</div>
+
+<div class="d-flex flex-wrap gap-4 justify-content-between">
+
+    <div class="d-flex flex-wrap gap-4 justify-content-start" 
+        style="width: 100%; max-width: 428px;">
+        <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+            style="width: 100%; max-width: 428px; height: {% if is_doctor%} 235px {% else %} 411px {% endif %}; display: flex; flex-direction: column;">
+            <div class="d-flex justify-content-start">
+                <div class="me-4">
+                    <img src="{% static 'accounts/img/welcome/Profissional.svg' %}" alt="profisisonal"
+                        style="min-width: {% if is_doctor%} 100px {% else %} 150px {% endif %};">
+                </div>
+                <div>
+                    <h1 class="fs-5 text-primary fw-bold mt-2 mb-0">Olá, {% if is_doctor%}Dr.{% endif %} {{professional.name }}</h1>
+                    <p class="mb-3 fs-6 text-custom">O que vamos fazer hoje?</p>
+                    <div>
+                        {% if not is_doctor %}
+                        <a class="d-flex align-items-center gap-2 mt-3 pt-3" href="{% url 'hospital:schedule_create' %}"
+                            style="color: rgba(55, 55, 55, 0.75);">
+                            <i class="bi bi-calendar-plus-fill" style="font-size: 20px;"></i>
+                            <span>Criar nova escala</span>
+                        </a>
+                        <a class="d-flex align-items-center gap-2" href="{% url 'hospital:schedule_list' %}"
+                            style="color: rgba(55, 55, 55, 0.75);">
+                            <i class="bi bi-calendar-week-fill" style="font-size: 20px;"></i>
+                            <span>Ver escalas</span>
+                        </a>
+                        {% else %}
+                        <a class="d-flex align-items-center gap-2 mt-3 pt-3" href="{% url 'hospital:shift_list' %}"
+                            style="color: rgba(55, 55, 55, 0.75);">
+                            <i class="bi bi-clipboard-heart-fill" style="font-size: 20px;"></i>
+                            <span>Ver todos os meus plantões</span>
+                        </a>
+                        <a class="d-flex align-items-center gap-2" href="{% url 'hospital:schedule_list' %}"
+                            style="color: rgba(55, 55, 55, 0.75);">
+                            <i class="bi bi-calendar-check-fill" style="font-size: 20px;"></i>
+                            <span>Ver minhas escalas</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if is_doctor %}
+            <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+                style="width: 100%; max-width: 428px; height: 173px; display: flex; flex-direction: column;">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{% static 'accounts/img/welcome/Horario.svg' %}" alt="Pendentes" width="30" height="30"
+                        class="me-2">
+                    <h1 class="fs-5 text-primary fw-bold mt-2">Horas trabalhadas esse mês:</h1>
+                </div>
+                <div class="rounded overflow-auto">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Meta mensal: {{ professional.workload }} h</span>
+                    </div>
+                    
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-concluido" role="progressbar" style="width: {{ professional.work_percent }}%;" title="5h concluídas"></div>
+                        <!-- <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" title="10h pendentes"></div> -->
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{ professional.free_percent }}%;" title="5h livres"></div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="d-flex justify-content-between text-center mt-2">
+
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center gap-1 mb-1">
+                                    <i class="bi bi-check-circle-fill text-concluido" style="font-size: 14px;"></i>
+                                    <span style="font-size: 14px;">Concluídas</span>
+                                </div>
+                                <span style="font-size: 14px;">{{ professional.workhours }} h ({{ professional.work_percent }}%)</span>
+                            </div>
+
+                            <!-- <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center gap-1 mb-1">
+                                    <i class="bi bi-hourglass-split text-warning" style="font-size: 14px;"></i>
+                                    <span style="font-size: 14px;">Pendentes</span>
+                                </div>
+                                <span style="font-size: 14px;">10h (50%)</span>
+                            </div> -->
+
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center gap-1 mb-1">
+                                    <i class="bi bi-slash-circle text-secondary" style="font-size: 14px;"></i>
+                                    <span style="font-size: 14px;">Livres</span>
+                                </div>
+                                <span style="font-size: 14px;">{{ professional.freehours }} h ({{ professional.free_percent }}%)</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    {% if not is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 517px; height: 411px; display: flex; flex-direction: column;">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{% static 'accounts/img/welcome/Rascunho.svg' %}" alt="Pendentes" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Escalas em rascunho:</h1>
+            </div>
+            {% if schedules %}
+            <a href="{% url 'hospital:schedule_list' %}" class="me-1" style="color: rgba(55, 55, 55, 0.75);">Ver
+                todos</a>
+            {% endif %}
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" style="max-height: 311px;">
+            <div class="d-flex flex-column gap-3 m-2 me-2">
+
+                {% for schedule in schedules %}
+                <div class="d-flex align-items-center justify-content-between rounded-4 px-4 py-3 clickable-card"
+                    onclick="window.location.href='{% url 'hospital:schedule_detail' schedule.id %}'">
+                    <div>
+                        <div class="text-dark" style="font-size: 20px;">#{{ schedule.id }} - {{ schedule.name }}</div>
+                        <div class="d-flex align-items-center gap-2 mt-1" style="font-size: 0.95rem;">
+                            <img src="{% static 'accounts/img/welcome/Data.svg' %}" alt="Data" width="20" height="20">
+                            <span>{{ schedule.formatted_date }}</span>
+                        </div>
+                    </div>
+                    <div class="btn action-button d-flex align-items-center">
+                        <img src="{% static 'accounts/img/welcome/Editar.svg' %}" alt="Editar escala" width="18"
+                            height="18" class="me-2">
+                        <span>Editar</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="d-flex flex-column justify-content-center align-items-center text-center py-5 w-100">
+                    <img src="{% static 'accounts/img/welcome/Empty.svg' %}" alt="Sem escalas em rascunho"
+                        style="max-width: 147px; opacity: 50%;" class="mb-3">
+                    <p class="text-muted fs-5">Nenhuma escala em rascunho</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% if not is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 516px; height: 411px; display: flex; flex-direction: column;">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{% static 'accounts/img/welcome/Pendente.svg' %}" alt="Pendentes" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Plantões pendentes:</h1>
+            </div>
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" style="max-height: 311px;">
+            <div class="d-flex flex-column gap-3 m-2 me-2">
+
+                {% for shift in shifts %}
+                <div class="rounded-4 px-3 clickable-card px-4 py-3" style="border: 1px solid #373737;"
+                    onclick="window.location.href='{% url 'hospital:shift_view' shift.id %}'">
+                    <div class="d-flex">
+                        <div class="position-absolute top-0 end-0 mt-2 me-2 d-flex gap-1">
+                            {% if shift.is_empty %}
+                            <span class="badge bg-danger text-dark d-flex align-items-center gap-1">
+                                <i class="bi bi-person-x-fill"></i>
+                            </span>
+                            {% else %}
+                            {% if shift.has_conflict %}
+                            <span class="badge bg-warning d-flex align-items-center gap-1">
+                                <i class="bi bi-exclamation-diamond-fill"></i>
+                            </span>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="pe-5" style="flex: 1; border-right: 2px solid #143886;">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="{% static 'accounts/img/welcome/Data.svg' %}" alt="Data" width="20"
+                                    height="20" class="me-2">
+                                <span class="text-dark" style="font-size: 20px;">{{ shift.date }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <img src="{% static 'accounts/img/welcome/Horario.svg' %}" alt="Horário" width="20"
+                                    height="20" class="me-2">
+                                <span>{{ shift.start_time }} – {{ shift.end_time }}</span>
+                            </div>
+                        </div>
+
+                        <div class="ps-5" style="flex: 1;">
+                            <div class="d-flex align-items-center gap-2" style="margin-bottom: 0.736em;">
+                                <img src="{% static 'accounts/img/welcome/Pessoa.svg' %}" alt="Pessoa" width="20"
+                                    height="20" class="me-2" title="Gestor">
+                                <span>{{ shift.manager_name }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <img src="{% static 'accounts/img/welcome/Setor.svg' %}" alt="Setor" width="20"
+                                    height="20" class="me-2">
+                                <span>{{ shift.department }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="d-flex flex-column justify-content-center align-items-center text-center py-5 w-100">
+                    <img src="{% static 'accounts/img/welcome/Empty.svg' %}" alt="Sem escalas em rascunho"
+                        style="max-width: 147px; opacity: 50%;" class="mb-3">
+                    <p class="text-muted fs-5">Nenhum plantão pendente</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% if not is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 428px; height: 318px; display: flex; flex-direction: column;">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <i class="i equalizer"></i>
+                <img src="{% static 'accounts/img/welcome/Estatisticas.svg' %}" alt="Pendentes" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Estatísticas mensais:</h1>
+            </div>
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" style="max-height: 300px;">
+            <div class="d-flex flex-column gap-3 m-1 me-2">
+
+                <div class="d-flex justify-content-between bg-light rounded p-3 shadow-sm align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-calendar-event-fill text-primary" style="font-size: 20px;"></i>
+                        <span>Total de plantões desse mês</span>
+                    </div>
+                    <span class="fw-bold text-primary">{{ statistics.total_shifts }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between bg-light rounded p-3 shadow-sm align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 20px;"></i>
+                        <span>Plantões sem médico desse mês</span>
+                    </div>
+                    <span class="fw-bold text-danger">{{ statistics.unallocated_shifts }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between bg-light rounded p-3 shadow-sm align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-person-heart text-success" style="font-size: 20px;"></i>
+                        <span>Total de médicos alocados esse mês</span>
+                    </div>
+                    <span class="fw-bold text-success">{{ statistics.total_doctors }}</span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% if not is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 1055px; height: 318px; display: flex; flex-direction: column;">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{% static 'accounts/img/welcome/Setor.svg' %}" alt="Gráfico" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Ocupação por setor:</h1>
+            </div>
+        </div>
+
+        <div class="flex-grow-1 overflow-auto"
+            style="max-height: 300px; display: flex; flex-direction: column; gap: 12px;">
+
+            {% for sector in sector_occupancy %}
+            <div class="bg-light rounded p-3 shadow-sm align-items-center">
+                <div class="d-flex justify-content-between mb-1">
+                    <span>{{ sector.sector }}</span>
+                    <span class="text-primary fw-bold">{{ sector.filled_percentage }}%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-primary" role="progressbar"
+                        style="width: {{ sector.filled_percentage }}%;"></div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 517px; height: 430px; display: flex; flex-direction: column;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{% static 'accounts/img/welcome/Rascunho.svg' %}" alt="Gráfico" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Próximos plantões:</h1>
+            </div>
+            {% if shifts %}
+            <a href="{% url 'hospital:shift_list' %}" class="me-1" style="color: rgba(55, 55, 55, 0.75);">Ver
+                todos</a>
+            {% endif %}
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" style="max-height: 311px;">
+            <div class="d-flex flex-column gap-3 m-2 me-2">
+                {% for shift in shifts %}
+                <div class="rounded-4 px-3 clickable-card px-4 py-3" style="border: 1px solid #373737;"
+                    onclick="window.location.href='{% url 'hospital:shift_view' shift.id %}'">
+                    <div class="d-flex">
+                        <div class="position-absolute top-0 end-0 mt-2 me-2 d-flex gap-1">
+                            {% if shift.is_empty %}
+                            <span class="badge bg-danger text-dark d-flex align-items-center gap-1">
+                                <i class="bi bi-person-x-fill"></i>
+                            </span>
+                            {% else %}
+                            {% if shift.has_conflict %}
+                            <span class="badge bg-warning d-flex align-items-center gap-1">
+                                <i class="bi bi-exclamation-diamond-fill"></i>
+                            </span>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="pe-5" style="flex: 1; border-right: 2px solid #143886;">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="{% static 'accounts/img/welcome/Data.svg' %}" alt="Data" width="20"
+                                    height="20" class="me-2">
+                                <span class="text-dark" style="font-size: 20px;">{{ shift.date }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <img src="{% static 'accounts/img/welcome/Horario.svg' %}" alt="Horário" width="20"
+                                    height="20" class="me-2">
+                                <span>{{ shift.start_time }} – {{ shift.end_time }}</span>
+                            </div>
+                        </div>
+
+                        <div class="ps-5" style="flex: 1;">
+                            <div class="d-flex align-items-center gap-2" style="margin-bottom: 0.736em;">
+                                <img src="{% static 'accounts/img/welcome/Pessoa.svg' %}" alt="Pessoa" width="20"
+                                    height="20" class="me-2" title="Gestor">
+                                <span>{{ shift.manager_name }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <img src="{% static 'accounts/img/welcome/Setor.svg' %}" alt="Setor" width="20"
+                                    height="20" class="me-2">
+                                <span>{{ shift.department }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="d-flex flex-column justify-content-center align-items-center text-center py-5 w-100">
+                    <img src="{% static 'accounts/img/welcome/Empty.svg' %}" alt="Sem escalas em rascunho"
+                        style="max-width: 147px; opacity: 50%;" class="mb-3">
+                    <p class="text-muted fs-5">Nenhum plantão pendente</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 516px; height: 430px; display: flex; flex-direction: column;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{% static 'accounts/img/welcome/Notificacoes.svg' %}" alt="Gráfico" width="30" height="30"
+                    class="me-2">
+                <h1 class="fs-5 text-primary fw-bold mt-2">Notificações recentes:</h1>
+            </div>
+            {% if notifications %}
+            <a href="{% url 'notification:list' %}" class="me-1" style="color: rgba(55, 55, 55, 0.75);">Ver
+                todos</a>
+            {% endif %}
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" style="max-height: 311px;">
+            <div class="d-flex flex-column gap-3 m-2 me-2">
+                {% for notification in notifications %}
+                    <div class="rounded-4 px-3 clickable-card px-4 py-3" style="border: 1px solid #373737;" onclick="window.location.href='{{ notification.url }}'">
+                        
+                        <!-- Linha 1: Foto + Nome à esquerda | Data/Hora à direita -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                {% if notification.sender_photo %}
+                                    <img src="{{ notification.sender_photo }}" alt="Foto de perfil" class="foto-perfil-header" style="width: 26px; height: 26px;" />
+                                {% else %}
+                                    <img src="{% static 'hospital/img/default_profile.png' %}" alt="Foto padrão" class="foto-perfil-header" style="width: 26px; height: 26px; " />
+                                {% endif %}
+                                <span class="text-primary">{{ notification.sender_name }}</span>
+                            </div>
+                            <span class="text-muted" style="font-size: 14px;">{{ notification.created_at }}</span>
+                        </div>
+
+                        <!-- Linha 2: Mensagem -->
+                        <div class="text-dark" style="font-size: 15px;">
+                            {{ notification.message }}
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="d-flex flex-column justify-content-center align-items-center text-center py-5 w-100">
+                        <img src="{% static 'accounts/img/welcome/Empty.svg' %}" alt="Sem escalas em rascunho"
+                            style="max-width: 147px; opacity: 50%;" class="mb-3">
+                        <p class="text-muted fs-5">Nenhuma notificação encontrada</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    <!-- {% if is_doctor %}
+    <div class="bloco-escala p-4 rounded-4 shadow border text-dark"
+        style="width: 100%; max-width: 1506px; height: 430px; display: flex; flex-direction: column;">
+
+    </div>
+    {% endif %} -->
+
+
+</div>
+
+{% endblock %}

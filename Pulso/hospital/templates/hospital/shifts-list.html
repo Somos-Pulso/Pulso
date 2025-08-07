@@ -1,0 +1,64 @@
+{% load static %}
+
+{% for shift in shifts %}
+
+<a href="{% url 'hospital:shift_view' shift.id%}" class="conteudo2">
+    <div class="bloco-escala p-4 pt-5 ps-5 mt-4 rounded-4 shadow border">
+        <div class="justify-content-between d-flex">
+            <div class="mb-2">
+
+                <h3 class="mb-1 text-primary fw-bold" style="font-size: 1.5em;">
+                    #{{ shift.id }} - {{ shift.schedule.department.name }}
+                </h3>
+            </div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-start flex-nowrap overflow-auto gap-3">
+            <div class="campo flex-grow-0" style="min-width: 200px;">
+                <div class="text-muted">Horário:</div>
+                <div class="d-flex align-items-center pb-2 gap-2">
+                    <img src="{% static 'img/main/horario.svg' %}" alt="" width="20" height="20">
+                    <label for="horario" class="form-label m-0">{{ shift.start_time }}h - {{ shift.end_time }}h
+                    </label>
+                </div>
+            </div>
+            <div class="campo flex-grow-0" style="min-width: 200px;">
+                <div class="text-muted">Data:</div>
+                <div class="d-flex align-items-center pb-2 gap-2">
+                    <img src="{% static 'img/main/calendario.svg' %}" alt="" width="20" height="20">
+                    <label for="horario" class="form-label m-0">{{ shift.date }}</label>
+                </div>
+            </div>
+            <div class="campo flex-grow-0" style="min-width: 200px;">
+                <div class="text-muted">Médico escalado:</div>
+                <div class="d-flex align-items-center pb-2 gap-2">
+                    <i class="bi bi-person-fill" style="font-size: 20px; color: #143886;"></i>
+                    <label for="horario" class="form-label m-0">{{doctor.professional.username}}</label>
+                </div>
+            </div>
+            <div class="campo flex-grow-0" style="min-width: 200px;">
+                <div class="text-muted">Gestor escalado:</div>
+                <div class="d-flex align-items-center pb-2 gap-2">
+                    <i class="bi bi-person-fill" style="font-size: 20px; color: #143886;"></i>
+                    <label for="horario" class="form-label m-0">
+                        {{ shift.schedule.department.manager.professional.username }}</label>
+                </div>
+            </div>
+            <div class="campo flex-grow-0" style="min-width: 200px;">
+                <div class="text-muted">Hospital:</div>
+                <div class="d-flex align-items-center pb-2 gap-2">
+                    <img src="{% static 'img/main/hospital.svg' %}" alt="" width="20" height="20">
+                    <label for="horario" class="form-label m-0">Hospital Walfredo Gurgel</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+
+{% empty %}
+<div class="d-flex flex-column justify-content-center align-items-center text-center py-5 w-100">
+    <img src="{% static 'hospital/img/schedule_list/icone_sem_escalas_minhas_escalas.svg' %}" alt="Sem escalas em rascunho"
+        style="max-width: 147px; opacity: 50%;" class="mb-3">
+    <p class="text-muted fs-5">Nenhum plantão encontrado</p>
+</div>
+{% endfor %}

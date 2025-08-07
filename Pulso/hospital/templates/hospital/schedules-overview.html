@@ -1,0 +1,91 @@
+{% extends "bases/base.html" %}
+{% load static %}
+
+{% block menu_escalas_active_class %}is-active{% endblock %}
+{% block menu_escalas_expanded %}true{% endblock %}
+{% block escala_menu_icon_rotation %}rotate{% endblock %}
+{% block menu_escalas_show_class_1 %}show{% endblock %}
+{% block menu_escalas_show_class_2 %}show{% endblock %}
+{% block submenu_minhas_escalas_active_class %}is-active{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'hospital/css/my-schedules.css'%}">
+
+<div>
+    <h1 class="mb-2 fs-2 text-primary fw-bold">Minhas Escalas</h1>
+    <p class="paragrafo-secao opacity-50 mb-3 fs-6 text-custom">
+        “Organize seus plantões sem complicação, a qualquer hora e em qualquer lugar.”
+    </p>
+</div>
+
+<div class="filtros-container d-flex gap-3 flex-no-wrap align-items-end mt-4 mb-4">
+    <!-- Filtros -->
+    <div class="filtros d-flex flex-wrap gap-3">
+
+        <!-- Período -->
+        <div class="filtro d-flex flex-column">
+            <div class="d-flex align-items-center pb-2 gap-2">
+                <i class="bi bi-calendar-week-fill text-custom" style="font-size: 19px;"></i>
+                <label for="periodo" class="form-label m-0 text-custom">Período</label>
+            </div>
+            <select id="periodo" class="form-select filtro-select fs-6 text-custom">
+                <option value="">Selecione...</option>
+                <option value="semanal">Semanal</option>
+                <option value="mensal">Mensal</option>
+                <option value="bimestral">Bimestral</option>
+                <option value="trimestral">Trimestral</option>
+                <option value="semestral">Semestral</option>
+                <option value="anual">Anual</option>
+            </select>
+        </div>
+
+        <!-- Setor -->
+        <div class="filtro d-flex flex-column">
+            <div class="d-flex align-items-center pb-2 gap-2">
+                <i class="bi bi-diagram-3-fill text-custom" style="font-size: 20px;"></i>
+                <label for="departamento" class="form-label m-0 text-custom">Setor</label>
+            </div>
+            <select id="departamento" class="form-select filtro-select fs-6 text-custom">
+                <option value="">Selecione...</option>
+                {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Status -->
+        <div class="filtro d-flex flex-column">
+            <div class="d-flex align-items-center pb-2 gap-2">
+                <i class="bi bi-bar-chart-fill text-custom" style="font-size: 1rem;"></i>
+                <label for="status" class="form-label m-0 text-custom">Status</label>
+            </div>
+            <select id="status" class="form-select filtro-select fs-6 text-custom">
+                <option value="">Selecione...</option>
+                <option value="Publicado">Publicado</option>
+                <option value="Rascunho">Rascunho</option>
+                <option value="Arquivado">Arquivado</option>
+            </select>
+        </div>
+    </div>
+
+    {% if not is_doctor %}
+    <div class="ms-auto align-items-end">
+        <a href="{% url 'hospital:schedule_create' %}" class="btn action-button d-flex align-items-center">
+            <img src="{% static 'hospital/img/schedule_list/icone_criar_nova_escala_minhas_escalas.svg'%}" alt="icone adicionar nova escala" class="me-2">
+            <span>Criar nova escala</span>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<div>
+    <div id="container-escalas">
+        {% include "hospital/schedules-list.html" %}
+    </div>
+
+</div>
+
+<script src="{% static 'hospital/js/schedules-filter.js' %}"></script>
+
+{% endblock %}
