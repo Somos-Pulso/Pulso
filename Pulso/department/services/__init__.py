@@ -1,1 +1,0 @@
-from .list_department_service import get_department_by_manager

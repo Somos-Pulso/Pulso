@@ -1,0 +1,13 @@
+package dev.pulso.pulso;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PulsoApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
