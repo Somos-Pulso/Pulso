@@ -1,5 +1,7 @@
 package dev.pulso.pulso.schedule.dto;
 
+import dev.pulso.pulso.schedule.model.enums.AllocationStatus;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,7 +20,7 @@ public record ScheduleShiftsDTO(
             String doctorPhoto,
             String doctorName,
             Boolean isConflicted,
-            String status
+            AllocationStatus status
     ) {}
 }
 

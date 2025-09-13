@@ -3,7 +3,7 @@ package dev.pulso.pulso.schedule.service.schedule;
 import dev.pulso.pulso.schedule.dto.DetailScheduleDTO;
 import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
 import dev.pulso.pulso.schedule.model.Schedule;
-import dev.pulso.pulso.schedule.projection.ScheduleShiftProjection;
+import dev.pulso.pulso.schedule.model.Shift;
 import dev.pulso.pulso.schedule.repository.AllocationRepository;
 import dev.pulso.pulso.schedule.repository.ScheduleRepository;
 import dev.pulso.pulso.schedule.repository.ShiftRepository;
@@ -24,7 +24,7 @@ public class DetailScheduleService {
         this.allocationRepo = allocRepo;
         this.shiftRepo = shiftRepo;
     }
-    public DetailScheduleDTO getSchedule(long scheduleId, long userId){
+    public DetailScheduleDTO getSchedule(long scheduleId){
         Schedule schedule = scheduleRepo.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("Schedule not found"));
         Long numAllAllocations = allocationRepo.countDistinctDoctorsBySchedule(scheduleId);
@@ -43,7 +43,12 @@ public class DetailScheduleService {
     };
 
     public List<ScheduleShiftsDTO> getShiftsBySchedule(long scheduleId){
-        List<ScheduleShiftProjection> projections = shiftRepo.findShiftsBySchedule(scheduleId);
+        List<Shift> projections = shiftRepo.findShiftsWithAllocationsAndDoctorsByScheduleId(scheduleId);
+        List<Shift> shifts = shiftRepo.findByScheduleId(scheduleId);
+
+        System.out.println(shifts);
+        System.out.println(projections);
+
         String managerName = "flavio";
         return projections.stream()
                 .map(p -> new ScheduleShiftsDTO(
@@ -52,13 +57,13 @@ public class DetailScheduleService {
                         p.getStartTime(),
                         p.getEndTime(),
                         p.getDescription(),
-                        ShiftHelper.getShiftType(p),
+                        ShiftHelper.getShiftType(p.getDate(), p.getEndTime(), p.getAllocations()),
                         p.getAllocations().stream()
                                 .map(a -> new ScheduleShiftsDTO.AllocationDTO(
                                         a.getId(),
-                                        a.getDoctor().getProfilePicture(),
-                                        a.getDoctor().getUsername(),
-                                        a.getIsConflicted(),
+                                        a.getDoctor().getProfessional().getProfilePicture(),
+                                        a.getDoctor().getProfessional().getUsername(),
+                                        allocationRepo.existsConflict(a),
                                         a.getStatus()
                                 ))
                                 .toList()

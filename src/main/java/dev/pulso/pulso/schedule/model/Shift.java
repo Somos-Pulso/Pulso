@@ -2,14 +2,12 @@ package dev.pulso.pulso.schedule.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Entity
 @Table(name = "shift")
@@ -122,11 +120,6 @@ public class Shift {
     }
 
     // ===== MÉTODOS EQUIVALENTES AO @property DO DJANGO =====
-
-    @Transient
-    public String getType() {
-        return (allocations != null && !allocations.isEmpty()) ? "ok-event" : "warn-event";
-    }
 
     @Transient
     public Duration getDuration() {

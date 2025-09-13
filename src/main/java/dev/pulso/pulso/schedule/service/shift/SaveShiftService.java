@@ -2,21 +2,18 @@ package dev.pulso.pulso.schedule.service.shift;
 
 import dev.pulso.pulso.account.model.Doctor;
 import dev.pulso.pulso.account.repository.DoctorRepository;
+import dev.pulso.pulso.helper.ShiftHelper;
 import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
 import dev.pulso.pulso.schedule.dto.ShiftSaveRequestDTO;
 import dev.pulso.pulso.schedule.model.Allocation;
 import dev.pulso.pulso.schedule.model.Schedule;
 import dev.pulso.pulso.schedule.model.Shift;
-import dev.pulso.pulso.schedule.model.enums.AllocationStatus;
-import dev.pulso.pulso.schedule.model.enums.AllocationType;
 import dev.pulso.pulso.schedule.repository.AllocationRepository;
 import dev.pulso.pulso.schedule.repository.ScheduleRepository;
 import dev.pulso.pulso.schedule.repository.ShiftRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +43,7 @@ public class SaveShiftService {
         boolean isUpdate = request.id() != null;
 
         if (isUpdate){
-            return update(request, schedule);
+            return update(request);
         }
         return create(request, schedule);
 
@@ -60,28 +57,25 @@ public class SaveShiftService {
                 request.description(),
                 schedule
         );
+        shiftRepo.save(newShift);
         List<Allocation> allocations = updateDoctorsToShift(newShift, request.doctorsAllocatedId());
-        return new ScheduleShiftsDTO(
-                newShift.getId(),
-                newShift.getDate(),
-                newShift.getStartTime(),
-                newShift.getEndTime(),
-                newShift.getDescription(),
-                newShift.getType(), // supondo que Shift tenha um campo type
-                allocations.stream()
-                        .map(a -> new ScheduleShiftsDTO.AllocationDTO(
-                                a.getId(),
-                                a.getDoctor().getPhotoUrl(), // ou getPhoto(), depende do teu model
-                                a.getDoctor().getProfessional().getUsername(),
-                                a.getIsConflicted(),         // ou outra lógica se esse campo não for direto
-                                a.getStatus() != null ? a.getStatus().name() : null
-                        ))
-                        .toList()
-        );
-
+        return makeReponse(newShift, allocations);
     }
 
-    private ScheduleShiftsDTO update(ShiftSaveRequestDTO request, Schedule schedule){}
+    private ScheduleShiftsDTO update(ShiftSaveRequestDTO request){
+        Shift shift = shiftRepo.findById(request.id())
+                .orElseThrow(() -> new IllegalArgumentException("Shift not found"));
+
+        shift.setDate(request.date());
+        shift.setStartTime(request.startTime());
+        shift.setEndTime(request.endTime());
+        shift.setDescription(request.description());
+        shiftRepo.save(shift);
+
+        List<Allocation> allocations = updateDoctorsToShift(shift, request.doctorsAllocatedId());
+        return makeReponse(shift, allocations);
+    };
+
 
     private List<Allocation> updateDoctorsToShift(Shift shift, List<Long> doctorIds) {
         List<Doctor> doctors = doctorRepo.findAllById(doctorIds);
@@ -106,5 +100,24 @@ public class SaveShiftService {
         allocationRepo.deleteAll(toRemove);
         allocationRepo.saveAll(finalAllocs);
         return finalAllocs;
+    }
+    private ScheduleShiftsDTO makeReponse(Shift shift, List<Allocation> allocations){
+        return new ScheduleShiftsDTO(
+                shift.getId(),
+                shift.getDate(),
+                shift.getStartTime(),
+                shift.getEndTime(),
+                shift.getDescription(),
+                ShiftHelper.getShiftType(shift.getDate(), shift.getEndTime(), allocations),
+                allocations.stream()
+                        .map(a -> new ScheduleShiftsDTO.AllocationDTO(
+                                a.getId(),
+                                a.getDoctor().getProfessional().getProfilePicture(),
+                                a.getDoctor().getProfessional().getUsername(),
+                                false,
+                                a.getStatus()
+                        ))
+                        .toList()
+        );
     }
 }

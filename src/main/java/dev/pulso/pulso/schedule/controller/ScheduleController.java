@@ -1,7 +1,6 @@
 package dev.pulso.pulso.schedule.controller;
 
 import dev.pulso.pulso.schedule.dto.DetailScheduleDTO;
-import dev.pulso.pulso.schedule.dto.ScheduleRequestDTO;
 import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
 import dev.pulso.pulso.schedule.model.Schedule;
 import dev.pulso.pulso.schedule.service.schedule.CreateScheduleService;
@@ -28,15 +27,16 @@ public class ScheduleController {
         this.detailService = detailService;
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<DetailScheduleDTO> getSchedule(@RequestBody ScheduleRequestDTO request) {
-        DetailScheduleDTO dto = detailService.getSchedule(request.scheduleId(), request.userId());
+    @GetMapping("/detail/{scheduleId}")
+    public ResponseEntity<DetailScheduleDTO> getSchedule(@PathVariable Long scheduleId) {
+        DetailScheduleDTO dto = detailService.getSchedule(scheduleId);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{scheduleId}/shifts")
     public ResponseEntity<List<ScheduleShiftsDTO>> getShiftsBySchedule(@PathVariable long scheduleId) {
         List<ScheduleShiftsDTO> shifts = detailService.getShiftsBySchedule(scheduleId);
+        System.out.println(shifts);
         if (shifts.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

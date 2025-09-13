@@ -1,17 +1,20 @@
 package dev.pulso.pulso.helper;
 
-import dev.pulso.pulso.schedule.projection.ScheduleShiftProjection;
+import dev.pulso.pulso.schedule.model.Shift;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 public class ShiftHelper {
-    public static String getShiftType(ScheduleShiftProjection shift) {
-        LocalDateTime endDateTime = LocalDateTime.of(shift.getDate(), shift.getEndTime());
+    public static <T> String getShiftType(LocalDate date, LocalTime endTime, List<T> allocations) {
+        LocalDateTime endDateTime = LocalDateTime.of(date, endTime);
 
         if (endDateTime.isBefore(LocalDateTime.now())) {
             return "past-shift";
         }
-        if (shift.getAllocations() == null || shift.getAllocations().isEmpty()) {
+        if (allocations == null || allocations.isEmpty()) {
             return "unfilled-shift";
         }
         return "ok-shift";

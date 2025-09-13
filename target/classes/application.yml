@@ -14,8 +14,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.tool.hbm2ddl: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace

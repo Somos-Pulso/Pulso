@@ -1,6 +1,5 @@
 package dev.pulso.pulso.schedule.controller;
 
-import dev.pulso.pulso.schedule.dto.ScheduleRequestDTO;
 import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
 import dev.pulso.pulso.schedule.dto.ShiftSaveRequestDTO;
 import dev.pulso.pulso.schedule.service.shift.SaveShiftService;
