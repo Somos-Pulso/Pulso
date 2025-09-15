@@ -5,9 +5,6 @@ import dev.pulso.pulso.hospital.model.Department;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Set;
 
 @Entity

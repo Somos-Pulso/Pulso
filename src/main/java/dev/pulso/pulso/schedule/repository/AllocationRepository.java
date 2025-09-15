@@ -18,14 +18,16 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
     List<Allocation> findByShift(Shift shift);
 
     @Query("""
-        SELECT CASE WHEN COUNT(a2) > 0 THEN true ELSE false END
-        FROM Allocation a2
-        WHERE a2.doctor = :#{#allocation.doctor}
-          AND a2.shift.date = :#{#allocation.shift.date}
-          AND a2.shift.startTime < :#{#allocation.shift.endTime}
-          AND a2.shift.endTime > :#{#allocation.shift.startTime}
-          AND a2 <> :allocation
-          AND a2.shift.schedule.department <> :#{#allocation.shift.schedule.department}
+        SELECT a.id, CASE WHEN COUNT(a2) > 0 THEN true ELSE false END
+        FROM Allocation a
+        LEFT JOIN Allocation a2 ON a2.doctor = a.doctor
+            AND a2.shift.date = a.shift.date
+            AND a2.shift.startTime < a.shift.endTime
+            AND a2.shift.endTime > a.shift.startTime
+            AND a2.shift.schedule.department <> a.shift.schedule.department
+            AND a2 <> a
+        WHERE a.id IN :allocationIds
+        GROUP BY a.id
     """)
-    boolean existsConflict(@Param("allocation") Allocation allocation);
+    List<Object[]> findConflicts(@Param("allocationIds") List<Long> allocationIds);
 }

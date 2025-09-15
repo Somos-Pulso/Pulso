@@ -1,7 +1,5 @@
 package dev.pulso.pulso.helper;
 
-import dev.pulso.pulso.schedule.model.Shift;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

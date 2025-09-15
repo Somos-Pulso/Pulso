@@ -2,7 +2,6 @@ package dev.pulso.pulso.notification.model;
 
 import dev.pulso.pulso.account.model.Professional;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity

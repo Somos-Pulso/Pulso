@@ -3,7 +3,7 @@ package dev.pulso.pulso.schedule.service.shift;
 import dev.pulso.pulso.account.model.Doctor;
 import dev.pulso.pulso.account.repository.DoctorRepository;
 import dev.pulso.pulso.helper.ShiftHelper;
-import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
+import dev.pulso.pulso.schedule.dto.ScheduleShiftDTO;
 import dev.pulso.pulso.schedule.dto.ShiftSaveRequestDTO;
 import dev.pulso.pulso.schedule.model.Allocation;
 import dev.pulso.pulso.schedule.model.Schedule;
@@ -36,19 +36,19 @@ public class SaveShiftService {
     }
 
     @Transactional
-    public ScheduleShiftsDTO save(ShiftSaveRequestDTO request){
+    public ScheduleShiftDTO save(ShiftSaveRequestDTO request){
         Schedule schedule = scheduleRepo.findById(request.scheduleId())
                 .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
 
         boolean isUpdate = request.id() != null;
 
         if (isUpdate){
-            return update(request);
+            return update(request, schedule);
         }
         return create(request, schedule);
 
     }
-    private ScheduleShiftsDTO create(ShiftSaveRequestDTO request, Schedule schedule) {
+    private ScheduleShiftDTO create(ShiftSaveRequestDTO request, Schedule schedule) {
 
         Shift newShift = new Shift(
                 request.date(),
@@ -58,11 +58,14 @@ public class SaveShiftService {
                 schedule
         );
         shiftRepo.save(newShift);
+
+        String scheduleManager = scheduleRepo.getScheduleManagerName(schedule.getId());
         List<Allocation> allocations = updateDoctorsToShift(newShift, request.doctorsAllocatedId());
-        return makeReponse(newShift, allocations);
+
+        return makeReponse(newShift, allocations, scheduleManager);
     }
 
-    private ScheduleShiftsDTO update(ShiftSaveRequestDTO request){
+    private ScheduleShiftDTO update(ShiftSaveRequestDTO request, Schedule schedule){
         Shift shift = shiftRepo.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Shift not found"));
 
@@ -72,9 +75,46 @@ public class SaveShiftService {
         shift.setDescription(request.description());
         shiftRepo.save(shift);
 
+        String scheduleManager = scheduleRepo.getScheduleManagerName(schedule.getId());
         List<Allocation> allocations = updateDoctorsToShift(shift, request.doctorsAllocatedId());
-        return makeReponse(shift, allocations);
-    };
+
+        return makeReponse(shift, allocations, scheduleManager);
+    }
+
+
+    private ScheduleShiftDTO makeReponse(Shift shift, List<Allocation> allocations, String cratedBy){
+        Map<Long, Boolean> conflicts = getAllocationConflicts(allocations);
+        return new ScheduleShiftDTO(
+                shift.getId(),
+                shift.getDate(),
+                shift.getStartTime(),
+                shift.getEndTime(),
+                shift.getDescription(),
+                ShiftHelper.getShiftType(shift.getDate(), shift.getEndTime(), allocations),
+                cratedBy,
+                allocations.stream()
+                        .map(a -> new ScheduleShiftDTO.AllocationDTO(
+                                a.getId(),
+                                a.getDoctor().getProfessional().getProfilePicture(),
+                                a.getDoctor().getProfessional().getUsername(),
+                                conflicts.get(a.getId()),
+                                a.getStatus()
+                        ))
+                        .toList()
+        );
+    }
+    
+    private Map<Long, Boolean> getAllocationConflicts(List<Allocation> allocations){
+        List<Long> allocationIds = allocations.stream()
+                .map(Allocation::getId)
+                .toList();
+
+        return allocationRepo.findConflicts(allocationIds).stream()
+                .collect(Collectors.toMap(
+                        row -> (Long) row[0],
+                        row -> (Boolean) row[1]
+                ));
+    }
 
 
     private List<Allocation> updateDoctorsToShift(Shift shift, List<Long> doctorIds) {
@@ -100,24 +140,5 @@ public class SaveShiftService {
         allocationRepo.deleteAll(toRemove);
         allocationRepo.saveAll(finalAllocs);
         return finalAllocs;
-    }
-    private ScheduleShiftsDTO makeReponse(Shift shift, List<Allocation> allocations){
-        return new ScheduleShiftsDTO(
-                shift.getId(),
-                shift.getDate(),
-                shift.getStartTime(),
-                shift.getEndTime(),
-                shift.getDescription(),
-                ShiftHelper.getShiftType(shift.getDate(), shift.getEndTime(), allocations),
-                allocations.stream()
-                        .map(a -> new ScheduleShiftsDTO.AllocationDTO(
-                                a.getId(),
-                                a.getDoctor().getProfessional().getProfilePicture(),
-                                a.getDoctor().getProfessional().getUsername(),
-                                false,
-                                a.getStatus()
-                        ))
-                        .toList()
-        );
     }
 }

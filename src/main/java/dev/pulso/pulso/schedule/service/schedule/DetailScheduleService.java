@@ -1,7 +1,8 @@
 package dev.pulso.pulso.schedule.service.schedule;
 
 import dev.pulso.pulso.schedule.dto.DetailScheduleDTO;
-import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
+import dev.pulso.pulso.schedule.dto.ScheduleShiftDTO;
+import dev.pulso.pulso.schedule.model.Allocation;
 import dev.pulso.pulso.schedule.model.Schedule;
 import dev.pulso.pulso.schedule.model.Shift;
 import dev.pulso.pulso.schedule.repository.AllocationRepository;
@@ -9,8 +10,9 @@ import dev.pulso.pulso.schedule.repository.ScheduleRepository;
 import dev.pulso.pulso.schedule.repository.ShiftRepository;
 import dev.pulso.pulso.helper.ShiftHelper;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,33 +44,44 @@ public class DetailScheduleService {
         );
     };
 
-    public List<ScheduleShiftsDTO> getShiftsBySchedule(long scheduleId){
-        List<Shift> projections = shiftRepo.findShiftsWithAllocationsAndDoctorsByScheduleId(scheduleId);
-        List<Shift> shifts = shiftRepo.findByScheduleId(scheduleId);
+    public List<ScheduleShiftDTO> getShiftsBySchedule(long scheduleId){
+        List<Shift> shifts = shiftRepo.findShiftsWithAllocationsAndDoctorsByScheduleId(scheduleId);
+        String scheduleManager = scheduleRepo.getScheduleManagerName(scheduleId);
+        Map<Long, Boolean> conflicts = getAllocationConflicts(shifts);
 
-        System.out.println(shifts);
-        System.out.println(projections);
 
-        String managerName = "flavio";
-        return projections.stream()
-                .map(p -> new ScheduleShiftsDTO(
-                        p.getId(),
-                        p.getDate(),
-                        p.getStartTime(),
-                        p.getEndTime(),
-                        p.getDescription(),
-                        ShiftHelper.getShiftType(p.getDate(), p.getEndTime(), p.getAllocations()),
-                        p.getAllocations().stream()
-                                .map(a -> new ScheduleShiftsDTO.AllocationDTO(
-                                        a.getId(),
-                                        a.getDoctor().getProfessional().getProfilePicture(),
-                                        a.getDoctor().getProfessional().getUsername(),
-                                        allocationRepo.existsConflict(a),
-                                        a.getStatus()
+        return shifts.stream()
+                .map(shift -> new ScheduleShiftDTO(
+                        shift.getId(),
+                        shift.getDate(),
+                        shift.getStartTime(),
+                        shift.getEndTime(),
+                        shift.getDescription(),
+                        ShiftHelper.getShiftType(shift.getDate(), shift.getEndTime(), shift.getAllocations()),
+                        scheduleManager,
+                        shift.getAllocations().stream()
+                                .map(allocation -> new ScheduleShiftDTO.AllocationDTO(
+                                        allocation.getId(),
+                                        allocation.getDoctor().getProfessional().getProfilePicture(),
+                                        allocation.getDoctor().getProfessional().getUsername(),
+                                        conflicts.get(allocation.getId()),
+                                        allocation.getStatus()
                                 ))
                                 .toList()
                 ))
                 .toList();
     }
 
+    private Map<Long, Boolean> getAllocationConflicts(List<Shift> shifts){
+        List<Long> allocationIds = shifts.stream()
+                .flatMap(s -> s.getAllocations().stream())
+                .map(Allocation::getId)
+                .toList();
+
+        return allocationRepo.findConflicts(allocationIds).stream()
+                .collect(Collectors.toMap(
+                        row -> (Long) row[0],
+                        row -> (Boolean) row[1]
+                ));
+    }
 }

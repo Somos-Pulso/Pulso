@@ -1,6 +1,6 @@
 package dev.pulso.pulso.schedule.controller;
 
-import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
+import dev.pulso.pulso.schedule.dto.ScheduleShiftDTO;
 import dev.pulso.pulso.schedule.dto.ShiftSaveRequestDTO;
 import dev.pulso.pulso.schedule.service.shift.SaveShiftService;
 import jakarta.validation.Valid;
@@ -20,8 +20,8 @@ public class ShiftController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ScheduleShiftsDTO> save(@RequestBody @Valid ShiftSaveRequestDTO request) {
-        ScheduleShiftsDTO shift = saveService.save(request);
+    public ResponseEntity<ScheduleShiftDTO> save(@RequestBody @Valid ShiftSaveRequestDTO request) {
+        ScheduleShiftDTO shift = saveService.save(request);
         return ResponseEntity.ok(shift);
     }
 

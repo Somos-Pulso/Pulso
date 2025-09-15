@@ -1,7 +1,7 @@
 package dev.pulso.pulso.schedule.controller;
 
 import dev.pulso.pulso.schedule.dto.DetailScheduleDTO;
-import dev.pulso.pulso.schedule.dto.ScheduleShiftsDTO;
+import dev.pulso.pulso.schedule.dto.ScheduleShiftDTO;
 import dev.pulso.pulso.schedule.model.Schedule;
 import dev.pulso.pulso.schedule.service.schedule.CreateScheduleService;
 import dev.pulso.pulso.exception.ScheduleAlreadyExistsException;
@@ -34,8 +34,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/{scheduleId}/shifts")
-    public ResponseEntity<List<ScheduleShiftsDTO>> getShiftsBySchedule(@PathVariable long scheduleId) {
-        List<ScheduleShiftsDTO> shifts = detailService.getShiftsBySchedule(scheduleId);
+    public ResponseEntity<List<ScheduleShiftDTO>> getShiftsBySchedule(@PathVariable long scheduleId) {
+        List<ScheduleShiftDTO> shifts = detailService.getShiftsBySchedule(scheduleId);
         System.out.println(shifts);
         if (shifts.isEmpty()) {
             return ResponseEntity.noContent().build();

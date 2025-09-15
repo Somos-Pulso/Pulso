@@ -6,13 +6,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public record ScheduleShiftsDTO(
+public record ScheduleShiftDTO(
         Long id,
         LocalDate date,
         LocalTime startTime,
         LocalTime endTime,
         String description,
         String type,
+        String createdBy,
         List<AllocationDTO> allocations
 ) {
     public record AllocationDTO(
