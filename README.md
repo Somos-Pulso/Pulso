@@ -31,7 +31,7 @@ O <b>Pulso</b> é um sistema web para gerenciamento e organização de escalas d
       <a href="https://github.com/IcaroGabrielIcaro">Icaro Gabriel</a>
     </td>
     <td align="center">
-      <img src="![3afa007c-9e86-46bd-a4a1-d49ec88c4e4b](https://github.com/user-attachments/assets/5cbd86ab-ce9f-429d-a759-458f8f41948f)" width="150"/><br>
+      <img src="https://github.com/user-attachments/assets/5806984b-de88-4e43-8e65-6e87da3ad227" width="150"/><br>      
       <a href="https://github.com/Alencast">Robson Alencastro</a>
     </td>
   </tr>
